@@ -105,12 +105,19 @@ $\cmod{z} = \sqrt{a^2+b^2}$
 $\norm{\mathbf{z}} = \sqrt{\cmod{z_1}^2 + \cdots + \cmod{z_n}^2} $
 
 \section{Fourier Transform}
+Fourier Basis for $\Complex^N $ is $\{F_0,F_1, \cdots, F_{N-1}\}$
+$$
+F_m(n) = \frac{1}{N} \ftem{m}{n}{N}
+$$
+
+Fourier basis is orthogonal, not orthonormal. Can be normalized the norm is $\norm{F_m} = \frac{1}{\sqrt{N}}$
+
 $$
 \hat{z}(m) = \sum_{n=0}^{N-1} z(n) \fteim{m}{n}{N}
 $$
 
 $$
-z(n) = \frac{1}{N} \sum_{m=0}^{N-1} \hat{z}(m) \fteim{m}{n}{N}
+z(n) = \frac{1}{N} \sum_{m=0}^{N-1} \hat{z}(m) \ftem{m}{n}{N}
 $$
 
 \subsection{2D}
@@ -123,11 +130,48 @@ z(n_1,n_2) = \frac{1}{\sqrt{N_1 N_2}} \sum_{m_1=0}^{N_1-1} \sum_{m_2=0}^{N_2-1} 
 $$
 
 \section{Wavelets}
-text
+
+\subsection{Wavelet tools}
+$$(w*z)(m) = \sum_{n=0}^{N-1}w(n) z(m-n)$$
+
+$(w*z)^{\wedge}(m) = \hat{w}(m) \hat{z}(m)$
+
+$R_k z$ is called the translation of $z$ by $k$.
+
+$ (R_kz)(n) = z(n-k) $
+
+$(R_kz)^{\wedge}(m) = \hat{z}(m) \fteim{m}{k}{N}$
+
+$ \inp{z}{R_kw} = (z * \tilde{w})(k) $
+
+$ \tilde{z}(n) = \conj{z(-n)} $
+
+$(\tilde{z})^{\wedge}(m) = \conj{\tilde{z}(m)} $
+
+$z^\ast(n) = (-1)^n z(n)$
 
 \section{Misc}
 $$
 \sum_{k=a}^{b} r^{k} = \frac{r^a - r^{b+1}}{1-r}
 $$
+
+Cauchy-Shwarz inequality
+$\conj{\inp{u}{v}} \leq \norm{u} \norm{v}$
+
+Unitary matrix
+$ \iff \conj{U^T} U = I$
+
+orthogonal $\iff \inp{u}{v} = 0 $
+
+Parseval's formula 
+$$
+\inp{z}{w} = \inp{\hat{z}}{\hat{w}}
+$$
+
+Plancherel's formula
+$$
+\norm{z}^2 = \norm{\hat{z}}^2
+$$
+
 \end{multicols}
 \end{document}
