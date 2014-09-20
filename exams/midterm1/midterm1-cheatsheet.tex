@@ -65,6 +65,7 @@
 % CS 530 commands
 	\newcommand{\conj}[1] {\overline{#1}}
 	\newcommand{\cmod}[1] {|#1|}
+	\newcommand{\norm}[1] {\|#1\|}
 	\newcommand{\Complex}[0] {\mathbb{C}}
 	% \fte{m}{n}{N}
 	\newcommand{\fte}[3] {e^{2 \pi i \frac{#1*#2}{#3}}}
@@ -101,6 +102,8 @@ $ \conj{z} = a - bi = re^{-i\theta}$
 
 $\cmod{z} = \sqrt{a^2+b^2}$
 
+$\norm{\mathbf{z}} = \sqrt{\cmod{z_1}^2 + \cdots + \cmod{z_n}^2} $
+
 \section{Fourier Transform}
 $$
 \hat{z}(m) = \sum_{n=0}^{N-1} z(n) \fteim{m}{n}{N}
@@ -121,5 +124,10 @@ $$
 
 \section{Wavelets}
 text
+
+\section{Misc}
+$$
+\sum_{k=a}^{b} r^{k} = \frac{r^a - r^{b+1}}{1-r}
+$$
 \end{multicols}
 \end{document}
