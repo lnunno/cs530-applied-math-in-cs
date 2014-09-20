@@ -1,0 +1,125 @@
+\documentclass[10pt,landscape]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+
+% This file was found in the answer at this page: http://tex.stackexchange.com/questions/8827/preparing-cheat-sheets
+
+\pdfinfo{
+  /Title (example.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Lucas)
+  /Subject (CS530 Cheatsheet 1)
+  /Keywords (pdflatex, latex,pdftex,tex)}
+
+% This sets page margins to .5 inch if using letter paper, and to 1cm
+% if using A4 paper. (This probably isn't strictly necessary.)
+% If using another size paper, use default 1cm margins.
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+    {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+    }
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+%My Environments
+\newtheorem{example}[section]{Example}
+% -----------------------------------------------------------------------
+
+\begin{document}
+% CS 530 commands
+	\newcommand{\conj}[1] {\overline{#1}}
+	\newcommand{\cmod}[1] {|#1|}
+	\newcommand{\Complex}[0] {\mathbb{C}}
+	% \fte{m}{n}{N}
+	\newcommand{\fte}[3] {e^{2 \pi i \frac{#1*#2}{#3}}}
+	\newcommand{\ftem}[3] {e^{2 \pi i \frac{#1 #2}{#3}}}
+	\newcommand{\fteim}[3] {e^{-2 \pi i \frac{#1 #2}{#3}}}
+	% \fteb{n}{N}
+	\newcommand{\fteb}[2] {e^{2 \pi i \frac{#1}{#2}}}
+	\newcommand{\ftei}[2] {e^{i \frac{#1 \pi}{#2}}}
+	\newcommand{\ftein}[2] {e^{-i \frac{#1 \pi}{#2}}}
+	\newcommand{\imagewidth}[0]{0.9\textwidth}
+	\newcommand{\inp}[2]{\langle #1, #2 \rangle}
+% END CS 530 commands
+\raggedright
+\footnotesize
+\begin{multicols}{3}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{CS 530 Midterm 1 Cheatsheet}} \\
+\end{center}
+
+\section{Complex Analysis}
+$z = a+ib = re^{i\theta} = r (cos(\theta) + i sin(\theta))$
+
+$ \conj{z} = a - bi = re^{-i\theta}$
+
+$\cmod{z} = \sqrt{a^2+b^2}$
+
+\section{Fourier Transform}
+$$
+\hat{z}(m) = \sum_{n=0}^{N-1} z(n) \fteim{m}{n}{N}
+$$
+
+$$
+z(n) = \frac{1}{N} \sum_{m=0}^{N-1} \hat{z}(m) \fteim{m}{n}{N}
+$$
+
+\subsection{2D}
+$$
+\hat{z}(m_1,m_2) = \frac{1}{\sqrt{N_1 N_2}} \sum_{n_1=0}^{N_1-1} \sum_{n_2=0}^{N_2-1} z(n_1,n_2) \fteim{m_1}{n_1}{N_1} \fteim{m_2}{n_2}{N_2}
+$$
+
+$$
+z(n_1,n_2) = \frac{1}{\sqrt{N_1 N_2}} \sum_{m_1=0}^{N_1-1} \sum_{m_2=0}^{N_2-1} \hat{z}(m_1,m_2) \ftem{m_1}{n_1}{N_1} \ftem{m_2}{n_2}{N_2}
+$$
+
+\section{Wavelets}
+text
+\end{multicols}
+\end{document}
