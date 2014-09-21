@@ -144,11 +144,30 @@ $(R_kz)^{\wedge}(m) = \hat{z}(m) \fteim{m}{k}{N}$
 
 $ \inp{z}{R_kw} = (z * \tilde{w})(k) $
 
+$ \inp{z}{R_k\tilde{w}} = (z * w)(k) $
+
 $ \tilde{z}(n) = \conj{z(-n)} $
 
 $(\tilde{z})^{\wedge}(m) = \conj{\tilde{z}(m)} $
 
 $z^\ast(n) = (-1)^n z(n)$
+
+For the below, $N = 2M$
+
+$(z^\ast)^{\wedge}(n) = \hat{z}(n+M)$
+
+$\cmod{\hat{w}(n)}^2 + \cmod{\hat{w}(n + M)}^2 = 2$ 
+
+$A(n)$ is the system matrix of $u$ and $v$
+
+$$
+A(n) =
+\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+\hat{u}(n) & \hat{v}(n) \\
+\hat{u}(n + M) & \hat{v}(n + M)
+\end{bmatrix}
+$$
 
 \section{Misc}
 $$
