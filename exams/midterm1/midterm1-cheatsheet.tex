@@ -77,6 +77,7 @@
 	\newcommand{\ftein}[2] {e^{-i \frac{#1 \pi}{#2}}}
 	\newcommand{\imagewidth}[0]{0.9\textwidth}
 	\newcommand{\inp}[2]{\langle #1, #2 \rangle}
+	\newcommand{\union}[0]{\cup}
 % END CS 530 commands
 \raggedright
 \footnotesize
@@ -130,6 +131,30 @@ z(n_1,n_2) = \frac{1}{\sqrt{N_1 N_2}} \sum_{m_1=0}^{N_1-1} \sum_{m_2=0}^{N_2-1} 
 $$
 
 \section{Wavelets}
+$A(n)$ is the system matrix of $u$ and $v$
+
+$$
+A(n) =
+\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+\hat{u}(n) & \hat{v}(n) \\
+\hat{u}(n + M) & \hat{v}(n + M)
+\end{bmatrix}
+$$
+
+$$
+B = \{R_{2k}v\}_{k=0}^{M-1} \union \{R_{2k}u\}_{k=0}^{M-1}
+$$
+
+B (u and v) form a first stage wavelet basis if and only if the following properties are true:
+\begin{enumerate}
+\item $\cmod{\hat{u}(n)}^2 + \cmod{\hat{u}(n + M)}^2 = 2$ 
+\item $\cmod{\hat{v}(n)}^2 + \cmod{\hat{v}(n + M)}^2 = 2$ 
+\item $\hat{u}(n)\conj{\hat{v}(n)} + \hat{u}(n + M)\conj{\hat{v}(n + M)} $
+\end{enumerate}
+
+$ \forall n = 0,1,\cdots, M-1$
+
 
 \subsection{Wavelet tools}
 $$(w*z)(m) = \sum_{n=0}^{N-1}w(n) z(m-n)$$
@@ -155,19 +180,6 @@ $z^\ast(n) = (-1)^n z(n)$
 For the below, $N = 2M$
 
 $(z^\ast)^{\wedge}(n) = \hat{z}(n+M)$
-
-$\cmod{\hat{w}(n)}^2 + \cmod{\hat{w}(n + M)}^2 = 2$ 
-
-$A(n)$ is the system matrix of $u$ and $v$
-
-$$
-A(n) =
-\frac{1}{\sqrt{2}}
-\begin{bmatrix}
-\hat{u}(n) & \hat{v}(n) \\
-\hat{u}(n + M) & \hat{v}(n + M)
-\end{bmatrix}
-$$
 
 \section{Misc}
 $$
