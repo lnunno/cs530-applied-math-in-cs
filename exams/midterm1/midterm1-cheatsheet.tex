@@ -103,7 +103,12 @@ $ \conj{z} = a - bi = re^{-i\theta}$
 
 $\cmod{z} = \sqrt{a^2+b^2}$
 
-$\norm{\mathbf{z}} = \sqrt{\cmod{z_1}^2 + \cdots + \cmod{z_n}^2} $
+Inner product $$\inp{z}{w} = \sum_{n=0}^{N-1} z(n)\conj{w(n)}$$
+
+$\norm{\mathbf{v}} = \sqrt{\inp{\mathbf{v}}{\mathbf{v}}} $
+
+Cauchy-Shwarz inequality
+$\conj{\inp{u}{v}} \leq \norm{u} \norm{v}$
 
 \section{Fourier Transform}
 Fourier Basis for $\Complex^N $ is $\{F_0,F_1, \cdots, F_{N-1}\}$
@@ -186,9 +191,6 @@ $$
 \sum_{k=a}^{b} r^{k} = \frac{r^a - r^{b+1}}{1-r}
 $$
 
-Cauchy-Shwarz inequality
-$\conj{\inp{u}{v}} \leq \norm{u} \norm{v}$
-
 Unitary matrix
 $ \iff \conj{U^T} U = I$
 
@@ -196,12 +198,12 @@ orthogonal $\iff \inp{u}{v} = 0 $
 
 Parseval's formula 
 $$
-\inp{z}{w} = \inp{\hat{z}}{\hat{w}}
+\inp{z}{w} = \frac{1}{N} \sum_{m=0}^{N-1} \hat{z}(m) \conj{\hat{w}(m)} = \frac{1}{N} \inp{\hat{z}}{\hat{w}}
 $$
 
 Plancherel's formula
 $$
-\norm{z}^2 = \norm{\hat{z}}^2
+\norm{z}^2 = \frac{1}{N} \sum_{m=0}^{N-1} \cmod{\hat{z}(m)}^2 = \frac{1}{N} \norm{\hat{z}}^2
 $$
 
 \end{multicols}
