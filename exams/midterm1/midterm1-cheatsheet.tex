@@ -136,31 +136,6 @@ z(n_1,n_2) = \frac{1}{\sqrt{N_1 N_2}} \sum_{m_1=0}^{N_1-1} \sum_{m_2=0}^{N_2-1} 
 $$
 
 \section{Wavelets}
-$A(n)$ is the system matrix of $u$ and $v$
-
-$$
-A(n) =
-\frac{1}{\sqrt{2}}
-\begin{bmatrix}
-\hat{u}(n) & \hat{v}(n) \\
-\hat{u}(n + M) & \hat{v}(n + M)
-\end{bmatrix}
-$$
-
-$$
-B = \{R_{2k}v\}_{k=0}^{M-1} \union \{R_{2k}u\}_{k=0}^{M-1}
-$$
-
-B (u and v) form a first stage wavelet basis if and only if the following properties are true:
-\begin{enumerate}
-\item $\cmod{\hat{u}(n)}^2 + \cmod{\hat{u}(n + M)}^2 = 2$ 
-\item $\cmod{\hat{v}(n)}^2 + \cmod{\hat{v}(n + M)}^2 = 2$ 
-\item $\hat{u}(n)\conj{\hat{v}(n)} + \hat{u}(n + M)\conj{\hat{v}(n + M)} $
-\end{enumerate}
-
-$ \forall n = 0,1,\cdots, M-1$
-
-
 \subsection{Wavelet tools}
 $$(w*z)(m) = \sum_{n=0}^{N-1}w(n) z(m-n)$$
 
@@ -185,6 +160,73 @@ $z^\ast(n) = (-1)^n z(n)$
 For the below, $N = 2M$
 
 $(z^\ast)^{\wedge}(n) = \hat{z}(n+M)$
+
+\subsection{1st Stage Wavelet Basis}
+$A(n)$ is the system matrix of $u$ and $v$
+
+$$
+A(n) =
+\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+\hat{u}(n) & \hat{v}(n) \\
+\hat{u}(n + M) & \hat{v}(n + M)
+\end{bmatrix}
+$$
+
+$$
+B = \{R_{2k}v\}_{k=0}^{M-1} \union \{R_{2k}u\}_{k=0}^{M-1} 
+$$
+$$
+= \{R_0v, R_2v, \dots, R_{N-2}v, R_0u, R_2 u, \dots, R_{N-2}u \}
+$$
+
+B (u and v) form a first stage wavelet basis if and only if the following properties are true:
+\begin{enumerate}
+\item $\cmod{\hat{u}(n)}^2 + \cmod{\hat{u}(n + M)}^2 = 2$ 
+\item $\cmod{\hat{v}(n)}^2 + \cmod{\hat{v}(n + M)}^2 = 2$ 
+\item $\hat{u}(n)\conj{\hat{v}(n)} + \hat{u}(n + M)\conj{\hat{v}(n + M)} $
+\end{enumerate}
+
+$ \forall n = 0,1,\cdots, M-1$
+
+\subsection{1st Stage Shannon Basis}
+$$
+\hat{u} = \left\{ 
+\begin{array}{cc}
+\sqrt{2} & \text{if } n = 0, 1, \dots,\frac{N}{4}-1 \text{ or } n = \frac{3N}{4}, \frac{3N}{4}+1,\dots,N-1 \\
+0 & \text{if } n = \frac{N}{4},\frac{N}{4}+1,\dots, \frac{3N}{4}-1
+\end{array} \right.
+$$
+
+$$
+\hat{v} = \left\{ 
+\begin{array}{cc}
+0 & \text{if } n = 0, 1, \dots,\frac{N}{4}-1 \text{ or } n = \frac{3N}{4}, \frac{3N}{4}+1,\dots,N-1 \\
+\sqrt{2} & \text{if } n = \frac{N}{4},\frac{N}{4}+1,\dots, \frac{3N}{4}-1
+\end{array} \right.
+$$
+
+\subsection{Real Wavelet Basis}
+
+\subsubsection{1st Stage Real Shannon Basis}
+$$
+\hat{u} = \left\{ 
+\begin{array}{cc}
+\sqrt{2} & \text{if } n = 0, 1, \dots,\frac{N}{4}-1 \text{ or } n = \frac{3N}{4}+1,\dots,N-1 \\
+i & \text{if } n = \frac{N}{4} \\
+-i & \text{if } n = \frac{3N}{4} \\
+0 & \text{if } n = \frac{N}{4}+1,\dots, \frac{3N}{4}-1
+\end{array} \right.
+$$
+
+$$
+\hat{v} = \left\{ 
+\begin{array}{cc}
+0 & \text{if } n = 0, 1, \dots,\frac{N}{4}-1 \text{ or } n = \frac{3N}{4}+1,\dots,N-1 \\
+1 & \text{if } n = \frac{N}{4} \text{ or } n = \frac{3N}{4} \\
+\sqrt{2} & \text{if } n = \frac{N}{4}+1,\dots, \frac{3N}{4}-1
+\end{array} \right.
+$$
 
 \section{Misc}
 $$
