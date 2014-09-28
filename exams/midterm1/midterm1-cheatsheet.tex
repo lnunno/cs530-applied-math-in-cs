@@ -96,6 +96,26 @@
      \Large{\underline{CS 530 Midterm 1 Cheatsheet}} \\
 \end{center}
 
+\section{Linear Algebra}
+Linear combination
+
+$$
+\sum_{i=1}^{n} \alpha_iv_i = \alpha_1v_1 + \dots + \alpha_nv_n
+$$
+
+Span: the set of all possible linear combinations of the elements of a given matrix.
+
+Linearly Independent 
+$\alpha_1v_1 + \dots + \alpha_nv_n \implies \alpha_1 = \dots = \alpha_n = 0$
+
+Support of a vector z is the number of non zero entries of z, denoted by $\norm{\text{supp } z}$
+
+Uncertainty principle
+$$
+\norm{\text{supp } z}^2 \cdot \norm{\text{supp } \hat{z}}^2 \geq N
+$$
+
+
 \section{Complex Analysis}
 $z = a+ib = re^{i\theta} = r (cos(\theta) + i sin(\theta))$
 
@@ -103,20 +123,60 @@ $ \conj{z} = a - bi = re^{-i\theta}$
 
 $\cmod{z} = \sqrt{a^2+b^2}$
 
+$(a_1 + i b_1) + (a_2 + i b_2) = (a_1 + a_2) + i (b_1+b_2)$
+
+$(a_1 + i b_1) \times (a_2 + i b_2) $
+$= (a_1 \times a_2 - b_1 \times b_2) + i (a_1 \times b_2 + a_2 \times b_1)$
+
+$z^{-1} = \frac{\conj{z}}{a^2+b^2}$
+
+$r_1e^{i\theta_1} \cdot r_2e^{i\theta_2} = r_1r_2e^{i(\theta_1+\theta_2)}$
+
+$\frac{r_1e^{i\theta_1}}{r_2e^{i\theta_2}} = \frac{r_1}{r_2}e^{i(\theta_1-\theta_2)}$
+
+Roots of unity 
+
+$$
+e^{i\theta} 
+\text{ where } \theta = \frac{2k\pi}{n}, k = 0,1,\dots,n-1
+$$
+
 Inner product $$\inp{z}{w} = \sum_{n=0}^{N-1} z(n)\conj{w(n)}$$
 
 $\norm{\mathbf{v}} = \sqrt{\inp{\mathbf{v}}{\mathbf{v}}} $
 
+$\inp{u+v}{w} = \inp{u}{w} + \inp{u}{v}$
+
+$\inp{\alpha u}{v} = \alpha \inp{u}{v}$
+
+Conjugate symmetry
+$\inp{u}{v} = \conj{\inp{u}{v}}$
+
 Cauchy-Shwarz inequality
 $\conj{\inp{u}{v}} \leq \norm{u} \norm{v}$
 
+$\inp{u}{u} \geq 0 $ and $\inp{u}{u} = 0 \iff u = \mathbf{0}$
+
+orthogonal $\iff \inp{u}{v} = 0 $
+
 \section{Fourier Transform}
+\subsection{1D}
 Fourier Basis for $\Complex^N $ is $\{F_0,F_1, \cdots, F_{N-1}\}$
 $$
 F_m(n) = \frac{1}{N} \ftem{m}{n}{N}
 $$
 
 Fourier basis is orthogonal, not orthonormal. Can be normalized the norm is $\norm{F_m} = \frac{1}{\sqrt{N}}$
+
+The Fourier Basis for $\Complex^4$ is:
+$$
+\begin{bmatrix}
+1 & 1  & 1  & 1 \\
+1 & -i & -1 & i \\
+1 & -1 & 1  & -1 \\
+1 & i  & -1 & -i  
+\end{bmatrix}
+$$
 
 $$
 \hat{z}(m) = \sum_{n=0}^{N-1} z(n) \fteim{m}{n}{N}
@@ -137,7 +197,27 @@ $$
 
 \section{Wavelets}
 \subsection{Wavelet tools}
-$$(w*z)(m) = \sum_{n=0}^{N-1}w(n) z(m-n)$$
+$$(w*z)(m) = \sum_{n=0}^{N-1}w(m-n) z(n)$$
+
+The convolution matrix is
+
+$$
+C =
+\{R_0w,R_1w,\dots,R_{N-1}w\}
+$$
+
+For example, with $N = 4$
+
+$$
+C = 
+\{R_0w,R_1w,R_2w,R_3w\}
+$$
+
+The convolution operation is simply
+
+$$
+(w*z)(m) = C \cdot z
+$$
 
 $(w*z)^{\wedge}(m) = \hat{w}(m) \hat{z}(m)$
 
@@ -160,6 +240,19 @@ $z^\ast(n) = (-1)^n z(n)$
 For the below, $N = 2M$
 
 $(z^\ast)^{\wedge}(n) = \hat{z}(n+M)$
+
+Unitary matrix
+$ \iff \conj{U^T} U = I$
+
+Parseval's formula 
+$$
+\inp{z}{w} = \frac{1}{N} \sum_{m=0}^{N-1} \hat{z}(m) \conj{\hat{w}(m)} = \frac{1}{N} \inp{\hat{z}}{\hat{w}}
+$$
+
+Plancherel's formula
+$$
+\norm{z}^2 = \frac{1}{N} \sum_{m=0}^{N-1} \cmod{\hat{z}(m)}^2 = \frac{1}{N} \norm{\hat{z}}^2
+$$
 
 \subsection{1st Stage Wavelet Basis}
 $A(n)$ is the system matrix of $u$ and $v$
@@ -184,7 +277,7 @@ B (u and v) form a first stage wavelet basis if and only if the following proper
 \begin{enumerate}
 \item $\cmod{\hat{u}(n)}^2 + \cmod{\hat{u}(n + M)}^2 = 2$ 
 \item $\cmod{\hat{v}(n)}^2 + \cmod{\hat{v}(n + M)}^2 = 2$ 
-\item $\hat{u}(n)\conj{\hat{v}(n)} + \hat{u}(n + M)\conj{\hat{v}(n + M)} $
+\item $\hat{u}(n)\conj{\hat{v}(n)} + \hat{u}(n + M)\conj{\hat{v}(n + M)} = 0$
 \end{enumerate}
 
 $ \forall n = 0,1,\cdots, M-1$
@@ -231,21 +324,6 @@ $$
 \section{Misc}
 $$
 \sum_{k=a}^{b} r^{k} = \frac{r^a - r^{b+1}}{1-r}
-$$
-
-Unitary matrix
-$ \iff \conj{U^T} U = I$
-
-orthogonal $\iff \inp{u}{v} = 0 $
-
-Parseval's formula 
-$$
-\inp{z}{w} = \frac{1}{N} \sum_{m=0}^{N-1} \hat{z}(m) \conj{\hat{w}(m)} = \frac{1}{N} \inp{\hat{z}}{\hat{w}}
-$$
-
-Plancherel's formula
-$$
-\norm{z}^2 = \frac{1}{N} \sum_{m=0}^{N-1} \cmod{\hat{z}(m)}^2 = \frac{1}{N} \norm{\hat{z}}^2
 $$
 
 \end{multicols}
