@@ -110,6 +110,29 @@ $\alpha_1v_1 + \dots + \alpha_nv_n \implies \alpha_1 = \dots = \alpha_n = 0$
 
 Support of a vector z is the number of non zero entries of z, denoted by $\norm{\text{supp } z}$
 
+For example,
+
+$$
+w = 
+\begin{bmatrix}
+0.5 \\
+0 \\
+0 \\
+2
+\end{bmatrix}
+,
+\text{supp } w
+=
+\begin{bmatrix}
+1 \\
+0 \\
+0 \\
+1
+\end{bmatrix}
+,
+\norm{\text{supp } w} = 2
+$$
+
 Uncertainty principle
 $$
 \norm{\text{supp } z}^2 \cdot \norm{\text{supp } \hat{z}}^2 \geq N
@@ -167,6 +190,11 @@ F_m(n) = \frac{1}{N} \ftem{m}{n}{N}
 $$
 
 Fourier basis is orthogonal, not orthonormal. Can be normalized the norm is $\norm{F_m} = \frac{1}{\sqrt{N}}$
+
+Normalized Fourier Basis
+$$
+\sqrt{N} \cdot F_m = \frac{F_m}{\norm{F_m}} = \frac{F_m}{\frac{1}{\sqrt{N}}}
+$$
 
 The Fourier Basis for $\Complex^4$ is:
 $$
@@ -254,6 +282,56 @@ $$
 \norm{z}^2 = \frac{1}{N} \sum_{m=0}^{N-1} \cmod{\hat{z}(m)}^2 = \frac{1}{N} \norm{\hat{z}}^2
 $$
 
+Downsampling
+$$
+z = 
+\begin{bmatrix}
+z(0) \\
+z(1) \\
+z(2) \\
+z(3) \\
+z(4) \\
+z(5) \\
+z(6) \\
+z(7)
+\end{bmatrix}
+\xrightarrow{\downarrow2}
+U_z
+=
+\begin{bmatrix}
+z(0) \\
+z(2) \\
+z(4) \\
+z(6) 
+\end{bmatrix}
+$$
+
+
+Upsampling
+
+$$
+z = 
+\begin{bmatrix}
+z(0) \\
+z(1) \\
+z(2) \\
+z(3) 
+\end{bmatrix}
+\xrightarrow{\uparrow2}
+U_z
+=
+\begin{bmatrix}
+z(0) \\
+0    \\
+z(1) \\
+0    \\
+z(2) \\
+0    \\
+z(3) \\
+0
+\end{bmatrix}
+$$
+
 \subsection{1st Stage Wavelet Basis}
 $A(n)$ is the system matrix of $u$ and $v$
 
@@ -319,6 +397,41 @@ $$
 1 & \text{if } n = \frac{N}{4} \text{ or } n = \frac{3N}{4} \\
 \sqrt{2} & \text{if } n = \frac{N}{4}+1,\dots, \frac{3N}{4}-1
 \end{array} \right.
+$$
+
+\subsection{Wavelet Transform}
+
+Wavelet transform
+$$
+z =
+\left\{
+\begin{array}{c}
+* \tilde{u} \to z * \tilde{u} \xrightarrow{\downarrow2} \\
+* \tilde{v} \to z * \tilde{v} \xrightarrow{\downarrow2}
+\end{array}
+\right.
+=
+\begin{bmatrix}
+D(z * \tilde{u}) \\
+D(z * \tilde{v}) \\
+\end{bmatrix}
+$$
+
+Inverse wavelet transform
+
+$$
+\begin{bmatrix}
+D(z * \tilde{u}) \\
+D(z * \tilde{v}) \\
+\end{bmatrix}
+=
+\begin{array}{c}
+\xrightarrow{\uparrow2} \frac{(z*\tilde{u})+(z*\tilde{u})^{*}}{2}*u \\
+\xrightarrow{\uparrow2} \frac{(z*\tilde{v})+(z*\tilde{v})^{*}}{2}*v
+\end{array}
++
+=
+z
 $$
 
 \section{Misc}
