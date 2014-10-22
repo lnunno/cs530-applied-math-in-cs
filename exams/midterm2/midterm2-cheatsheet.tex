@@ -67,6 +67,7 @@
 	\newcommand{\cmod}[1] {|#1|}
 	\newcommand{\norm}[1] {\|#1\|}
 	\newcommand{\Complex}[0] {\mathbb{C}}
+	\newcommand{\Real}[0] {\mathbb{R}}
 	% \fte{m}{n}{N}
 	\newcommand{\fte}[3] {e^{2 \pi i \frac{#1*#2}{#3}}}
 	\newcommand{\ftem}[3] {e^{2 \pi i \frac{#1 #2}{#3}}}
@@ -78,6 +79,7 @@
 	\newcommand{\imagewidth}[0]{0.9\textwidth}
 	\newcommand{\inp}[2]{\langle #1, #2 \rangle}
 	\newcommand{\union}[0]{\cup}
+	\newcommand{\gradient}[0]{\nabla}
 % END CS 530 commands
 \raggedright
 \footnotesize
@@ -136,6 +138,8 @@ $ \tilde{z}(n) = \conj{z(-n)} $
 
 $(\tilde{z})^{\wedge}(m) = \conj{\tilde{z}(m)} $
 
+$(\tilde{u}*\tilde{v})(n) = (u*v)\tilde{}(n)$
+
 $z^\ast(n) = (-1)^n z(n)$
 
 For the below, $N = 2M$
@@ -155,6 +159,7 @@ $$
 \norm{z}^2 = \frac{1}{N} \sum_{m=0}^{N-1} \cmod{\hat{z}(m)}^2 = \frac{1}{N} \norm{\hat{z}}^2
 $$
 
+\subsection{Up/Down Sampling}
 Downsampling
 $$
 z = 
@@ -204,6 +209,18 @@ z(3) \\
 0
 \end{bmatrix}
 $$
+
+\subsubsection{Properties}
+\begin{enumerate}
+\item $D(z) * w = D(z*U(w))$
+\item $U(x)*U(y) = U(x*y)$
+\end{enumerate}
+
+Suppose $N$ is divisible by $2^l,x,y,w\in l^2(Z_{N/2^l})$ and $z \in l^2(Z_N)$ Then
+\begin{enumerate}
+\item $D^l(z) * w = D^l(z*U^l(w))$
+\item $U^l(x)*U^l(y) = U^l(x*y)$
+\end{enumerate}
 
 \subsection{1st Stage Wavelet Basis}
 $A(n)$ is the system matrix of $u$ and $v$
@@ -308,8 +325,206 @@ z
 $$
 
 \subsection{Iterative Wavelet Construction}
+$$
+z =
+\left\{
+\begin{array}{l}
+* \tilde{v_1} \to \downarrow2 \xrightarrow{x_1} \\
+* \tilde{u_1} \to \downarrow2 \xrightarrow{y_1} 
+\left\{
+\begin{array}{c}
+* \tilde{v_2} \to \downarrow2 \xrightarrow{x_2} \\
+* \tilde{u_2} \to \downarrow2 \xrightarrow{y_2}
+\end{array}
+\right.
+\end{array}
+\right.
+$$
 
-\section{Misc}
+$ x_1 = D(z*\tilde{v_1}) $
+ 
+$ y_1 = D(z*\tilde{u_1}) $
 
+$ x_2 = D(y_1 * \tilde{v_2}) = D(D(z*\tilde{u_1})*\tilde{v_2}) = D^2(z*(u_1*Uv_2)\tilde{})$
+
+$ y_2 = D(y_1 * \tilde{u_2}) = D(D(z*\tilde{u_1})*\tilde{u_2}) = D^2(z*(u_1*Uu_2)\tilde{})$
+
+$
+\text{Let } f_1 = v_1, g_1 = u_1
+$
+
+$
+f_2 = g_1 * Uv_1, g_2 = g_1 * Uu_2
+$
+
+Then
+$x_1 = D(z*\tilde{f_1})$
+
+$y_1 = D(z*\tilde{g_1})$
+
+$x_2 = D^2(z*\tilde{f_2})$
+
+$y_2 = D^2(z*\tilde{g_2})$
+
+$$
+f_l = g_{l-1} * U^{l-1}(v_l)
+$$
+
+$$
+f_\ell = u_1 * U(u_2) * U^2(u_3) * \cdots U^{\ell-2}(u_{\ell-1})*U^{\ell-1}(v_\ell)
+$$
+
+$$
+g_l = g_{l-1}*U^{l-1}(u_l)
+$$
+
+$$
+g_\ell = u_1 * U(u_2) * U^2(u_3) * \cdots U^{\ell-2}(u_{\ell-1})*U^{\ell-1}(u_\ell)
+$$
+
+$$
+x_\ell = D^\ell(z*\tilde{f_\ell})
+$$
+
+$$
+y_\ell = D^\ell(z*\tilde{g_\ell})
+$$
+
+The $\ell$th system matrix is
+
+$$
+A_\ell(n) =
+\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+\hat{u_\ell}(n) & \hat{v_\ell}(n) \\
+\hat{u_\ell}(n + \frac{N}{2^\ell}) & \hat{v_\ell}(n + \frac{N}{2^\ell})
+\end{bmatrix}
+$$
+
+\subsubsection{Haar construction}
+
+$$
+u_1 =
+\begin{bmatrix}
+\frac{1}{\sqrt{2}} \\
+\frac{1}{\sqrt{2}} \\
+0 \\
+\vdots \\
+0 
+\end{bmatrix}
+,
+v_1 =
+\begin{bmatrix}
+\frac{1}{\sqrt{2}} \\
+-\frac{1}{\sqrt{2}} \\
+0 \\
+\vdots \\
+0 
+\end{bmatrix}
+$$
+
+$$
+u_\ell(0) = \frac{1}{\sqrt{2}}, u_\ell(1) = \frac{1}{\sqrt{2}}, \text{ and } u_\ell(n) = 0 \text{ for } 2 \leq n \leq (\frac{N}{2^{\ell-1}})-1
+$$
+
+$$
+v_\ell(0) = \frac{1}{\sqrt{2}}, v_\ell(1) = \frac{1}{\sqrt{2}}, \text{ and } v_\ell(n) = 0 \text{ for } 2 \leq n \leq (\frac{N}{2^{\ell-1}})-1
+$$
+
+$$
+f_{\ell}(n) =
+\left\{
+\begin{array}{ll}
+2^{-\ell/2}, & n = 0,1,\dots,2^{\ell-1}-1 \\
+-2^{-\ell/2}, & n = 2^{\ell-1},2^{\ell-1}+1,\dots,2^{\ell}-1 \\
+0,           & n = 2^{\ell},2^{\ell}+1,\dots,N-1
+\end{array}
+\right.
+$$
+
+$$
+g_{\ell}(n) =
+\left\{
+\begin{array}{ll}
+2^{-\ell/2}, & n = 0,1,\dots,2^{\ell-1}-1 \\
+0,           & n = 2^{\ell},2^{\ell}+1,\dots,N-1
+\end{array}
+\right.
+$$
+
+$
+\psi_{-\ell,k}(n) =
+\left\{
+\begin{array}{ll}
+2^{-\ell/2}, & n = 2^{\ell}k,2^{\ell}k+1,\dots,2^{\ell}k+2^{\ell-1}-1 \\
+-2^{-\ell/2}, & n = 2^{\ell}k+2^{\ell-1},2^{\ell}k+2^{\ell-1}+1,\dots,2^{\ell}k+2^{\ell}-1 \\
+0,           & n = 0,1,\dots,2^{\ell}k-1;2^{\ell}k+2^{\ell},\dots,N-1
+\end{array}
+\right.
+$
+
+$$
+\varphi_{-\ell,k}(n) =
+\left\{
+\begin{array}{ll}
+2^{-\ell/2}, & n = 2^{\ell}k,2^{\ell}k+1,\dots,2^{\ell}k+2^{\ell-1}-1 \\
+0,           & n = 0,1,\dots,2^{\ell}k-1;2^{\ell}k+2^{\ell},\dots,N-1
+\end{array}
+\right.
+$$
+
+\subsubsection{Shannon construction}
+
+$$
+\hat{v}_{\ell}(n) =
+\left\{
+\begin{array}{ll}
+\sqrt{2},    & \frac{N}{2^{\ell+1}} \leq n \leq \frac{3N}{2^{\ell+1}}-1 \\
+0,           & 0 \leq n \leq \frac{N}{2^{\ell+1}}-1; \frac{3N}{2^{\ell+1}} \leq n \leq \frac{N}{2^\ell-1} - 1
+\end{array}
+\right.
+$$
+
+$$
+\hat{u}_{\ell}(n) =
+\left\{
+\begin{array}{ll}
+\sqrt{2},    & 0 \leq n \leq \frac{N}{2^{\ell+1}}-1; \frac{3N}{2^{\ell+1}} \leq n \leq \frac{N}{2^\ell-1} - 1 \\
+0,           & \frac{N}{2^{\ell+1}} \leq n \leq \frac{3N}{2^{\ell+1}}-1
+\end{array}
+\right.
+$$
+
+\section{Optimization}
+See Numerical Optimization Chapter 2.
+
+In unconstrained optimization we minimize an objective function that depends on real variables, with no restrictions on these variables.
+
+$$
+\text{min}_x f(x)
+$$
+
+A point $x^*$ is a \textit{global minimizer} if $f(x^*) \leq f(x) \forall x$
+
+A point $x^*$ is a \textit{local minimizer} if there is a neighborhood $N$ of $x^*$ such that $f(x^*) \leq f(x) \forall x \in N$
+
+A point $x^*$ is a \textit{strict local minimizer} if there is a neighborhood $N$ of $x^*$ such that $f(x^*) < f(x) \forall x \in N \text{ with } x \neq x^*$
+
+\subsection{Recognizing a Local Minimum}
+Taylor's Theorem
+
+$f : \Real^n \to \Real $ and $p \in \Real^n$
+
+$$
+f(x+p) = f(x) + \gradient f(x+tp)^Tp
+$$
+
+\subsubsection{First-Order Necessary Conditions}
+
+If $x^*$ is a local minimizer and $f$ is continuously differentiable in an open neighborhood of $x^*$, then $\gradient f (x^*) = 0$
+
+\subsubsection{Second-Order Necessary Conditions}
+
+If $x^*$ is a local minimizer of $f$ and $\gradient^2f$ is continuous in an open neighborhood of $x^*$, then $\gradient f(x^*) = 0$ and $\gradient^2 f(x^*)$ is positive semidefinite.
 \end{multicols}
 \end{document}
