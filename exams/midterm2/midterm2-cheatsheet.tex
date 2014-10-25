@@ -80,6 +80,7 @@
 	\newcommand{\inp}[2]{\langle #1, #2 \rangle}
 	\newcommand{\union}[0]{\cup}
 	\newcommand{\gradient}[0]{\nabla}
+	\newcommand{\Hessian}[0]{\gradient^2}
 % END CS 530 commands
 \raggedright
 \footnotesize
@@ -401,6 +402,32 @@ A_\ell(n) =
 \end{bmatrix}
 $$
 
+$$
+\psi_{-j,k} = R_{2^jk}f_j \text{ and } \varphi_{-j,k} = R_{2^jk}g_j
+$$
+
+for $j = 1,2,\dots,p$
+
+Then
+
+$$
+\{R_{2^1k}f_1\}^{(N/2)-1}_{k=0} \union \{R_{2^2k}f_2\}^{(N/4)-1}_{k=0} \union \dots \union \{R_{2^pk}f_p\}^{(N/2^p)-1}_{k=0} \union \{R_{2^pk}g_p\}^{(N/2^p)-1}_{k=0}
+$$
+
+$$
+\{\psi_{-1,k}\}^{(N/2)-1}_{k=0} \union \{\psi_{-2,k}\}^{(N/4)-1}_{k=0} \union \dots \union \{\psi_{-p,k}\}^{(N/2^p)-1}_{k=0} \union \{\varphi_{-p,k}\}^{(N/2^p)-1}_{k=0}
+$$
+
+More succinctly:
+
+$$
+(\bigcup_{\ell=1}^{j}\{ \psi_{-\ell,k}\}_{0 \leq k \leq (N/2^{\ell})-1 }) 
+\union \{ \phi_{-j,k}\}_{0 \leq k \leq (N/2^{\ell})-1 }
+$$
+
+
+is a p-th stage wavelet basis.
+
 \subsubsection{Haar construction}
 
 $$
@@ -495,36 +522,59 @@ $$
 \right.
 $$
 
+$$
+\hat{\psi}_{-\ell,0}(n) =
+\left\{
+\begin{array}{ll}
+2^{\ell/2}, & \frac{N}{2^{\ell+1}} \leq n \leq \frac{N}{2^{\ell}}-1; \\
+&             N - \frac{N}{2^{\ell}} \leq n \leq N- \frac{N}{2^{\ell+1}} -1 \\ 
+0,           & 0 \leq n \leq \frac{N}{2^{\ell+1}}-1;\frac{N}{2^{\ell}} \leq n \leq N - \frac{N}{2^{\ell}-1};\\
+&             N - \frac{N}{2^{\ell+1}} \leq n \leq N-1 \\ 
+\end{array}
+\right.
+$$
+
+$$
+\hat{\varphi}_{-\ell,0}(n) =
+\left\{
+\begin{array}{ll}
+2^{\ell/2}, & 0 \leq n \leq \frac{N}{2^{\ell+1}}-1; N - \frac{N}{2^{\ell+1}} \leq n \leq N-1 \\
+0,          & \frac{N}{2^{\ell+1}} \leq n \leq N-\frac{N}{2^{\ell+1}}-1
+\end{array}
+\right.
+$$
+
 \section{Optimization}
-See Numerical Optimization Chapter 2.
 
-In unconstrained optimization we minimize an objective function that depends on real variables, with no restrictions on these variables.
-
+\textbf{Gradient}
 $$
-\text{min}_x f(x)
-$$
-
-A point $x^*$ is a \textit{global minimizer} if $f(x^*) \leq f(x) \forall x$
-
-A point $x^*$ is a \textit{local minimizer} if there is a neighborhood $N$ of $x^*$ such that $f(x^*) \leq f(x) \forall x \in N$
-
-A point $x^*$ is a \textit{strict local minimizer} if there is a neighborhood $N$ of $x^*$ such that $f(x^*) < f(x) \forall x \in N \text{ with } x \neq x^*$
-
-\subsection{Recognizing a Local Minimum}
-Taylor's Theorem
-
-$f : \Real^n \to \Real $ and $p \in \Real^n$
-
-$$
-f(x+p) = f(x) + \gradient f(x+tp)^Tp
+\gradient f(x) = \begin{bmatrix}
+\frac{\partial f}{\partial x_1} \\
+\frac{\partial f}{\partial x_2} \\
+\vdots \\
+\frac{\partial f}{\partial x_n} \\
+\end{bmatrix}
 $$
 
-\subsubsection{First-Order Necessary Conditions}
+\textbf{Hessian}
+$$
+\Hessian f(x) = \begin{bmatrix}
+\frac{\partial^2 f}{\partial x_1^2} & \frac{\partial^2 f}{\partial x_1\partial x_2} & \cdots & \frac{\partial^2 f}{\partial x_1\partial x_n} \\
+\frac{\partial^2 f}{\partial x_2 \partial x_1 } & \frac{\partial^2 f}{\partial x_2^2} & \cdots & \frac{\partial^2 f}{\partial x_2\partial x_n} \\
+\vdots & \vdots & \vdots & \vdots \\
+\frac{\partial^2 f}{\partial x_n \partial x_1 } & \frac{\partial^2 f}{\partial x_n \partial x_2} & \cdots & \frac{\partial^2 f}{\partial x_n^2} \\
+\end{bmatrix}
+$$
 
-If $x^*$ is a local minimizer and $f$ is continuously differentiable in an open neighborhood of $x^*$, then $\gradient f (x^*) = 0$
+\subsection{Convex functions}
+A function $f:dom(f) \to \Real $ is convex if
+\begin{enumerate}
+\item Its domain $dom(f) \in \Real^n$ is convex
+\item For all $x^{(1)},x^{(2)} \in dom(f), \text{ and } 0 \leq \lambda \leq 1$ we have 
+$$
+f(\lambda x^{(1)} + (1-\lambda)x^{(2)}) \leq \lambda f(x^{(1)}) + (1-\lambda)f(x^{(2)})
+$$
+\end{enumerate}
 
-\subsubsection{Second-Order Necessary Conditions}
-
-If $x^*$ is a local minimizer of $f$ and $\gradient^2f$ is continuous in an open neighborhood of $x^*$, then $\gradient f(x^*) = 0$ and $\gradient^2 f(x^*)$ is positive semidefinite.
 \end{multicols}
 \end{document}
